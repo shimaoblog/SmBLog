@@ -298,7 +298,72 @@ for (const f of fs.readdirSync(__dirname)) {
     fs.copyFileSync(path.join(__dirname, f), path.join(outputDir, f));
   }
 }
+// ========== RSS feed.xml 生成模块 ==========
+function xmlEscape(str){
+    if(!str) return "";
+    return String(str)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&apos;");
+}
 
+// 取最新10篇文章
+const rssPosts = allPosts
+    .sort((a,b)=>new Date(b.date)-new Date(a.date))
+    .slice(0,10);
+
+let rssItemXml = "";
+for(const p of rssPosts){
+    const pubDate = new Date(p.date).toUTCString();
+    const fullUrl = site.url + site.base + p.url.replace(/^\//,'');
+    rssItemXml += `
+<item>
+  <title>${xmlEscape(p.title)}</title>
+  <link>${xmlEscape(fullUrl)}</link>
+  <guid>${xmlEscape(fullUrl)}</guid>
+  <pubDate>${pubDate}</pubDate>
+  <description>${xmlEscape(p.description||"")}</description>
+</item>
+`;
+}
+
+const rssXml = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<channel>
+  <title>${xmlEscape(site.title)}</title>
+  <link>${xmlEscape(site.url+site.base)}</link>
+  <description>${xmlEscape(site.description)}</description>
+  <language>zh‑CN</language>
+${rssItemXml}
+</channel>
+</rss>
+`;
+
+fs.writeFileSync(path.join(outputDir,"feed.xml"), rssXml,"utf8");
+
+// ========== RSS结束 ==========
+// JSON‑Feed 1.1
+const jsonFeed = {
+  "version":"https://jsonfeed.org/version/1.1",
+  "title": site.title,
+  "description": site.description,
+  "home_page_url": site.url+site.base,
+  "feed_url": site.url+site.base+"feed.json",
+  "items": rssPosts.map(p=>{
+    return {
+      "id": site.url+site.base+p.url.replace(/^\//,''),
+      "url": site.url+site.base+p.url.replace(/^\//,''),
+      "title": p.title,
+      "summary": p.description||"",
+      "date_published": new Date(p.date).toISOString()
+    }
+  })
+};
+fs.writeFileSync(path.join(outputDir,"feed.json"),JSON.stringify(jsonFeed,null,2),"utf8");
+console.log("✅ JSON feed.json 已生成");
+console.log("✅ RSS feed.xml 已生成");
 console.log('✅ SmBLog 构建完成！');
 console.log(`📁 输出目录: ${outputDir}`);
 console.log(`📝 文章数量: ${postList.length}`);
