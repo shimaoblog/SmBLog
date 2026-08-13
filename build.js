@@ -263,34 +263,6 @@ for (const p of postList) {
 }
 
 // ============================================
-// 输出 RSS
-// ============================================
-let rssItems = '';
-for (const p of postList.slice(0, 20)) {
-  const y = p.date.getFullYear();
-  const m = String(p.date.getMonth() + 1).padStart(2, '0');
-  const d = String(p.date.getDate()).padStart(2, '0');
-  const url = `${base}${p.category}/${y}/${m}/${d}/${p.slug}.html`;
-  rssItems += `
-    <item>
-      <title><![CDATA[${p.title}]]></title>
-      <link>${url}</link>
-      <pubDate>${p.date.toUTCString()}</pubDate>
-      <description><![CDATA[${p.content}]]></description>
-    </item>`;
-}
-const rssXml = `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0">
-  <channel>
-    <title>${siteTitle}</title>
-    <link>${base}</link>
-    <description>${config.description || ''}</description>
-    ${rssItems}
-  </channel>
-</rss>`;
-fs.writeFileSync(path.join(outputDir, 'feed.xml'), rssXml, 'utf-8');
-
-// ============================================
 // 复制根目录静态文件（favicon 等）
 // ============================================
 for (const f of fs.readdirSync(__dirname)) {
@@ -298,7 +270,10 @@ for (const f of fs.readdirSync(__dirname)) {
     fs.copyFileSync(path.join(__dirname, f), path.join(outputDir, f));
   }
 }
-// ========== RSS feed.xml 生成模块 ==========
+
+// ============================================
+// RSS + JSON Feed
+// ============================================
 function xmlEscape(str){
     if(!str) return "";
     return String(str)
@@ -309,22 +284,24 @@ function xmlEscape(str){
         .replace(/'/g,"&apos;");
 }
 
-// 取最新10篇文章
-const rssPosts = allPosts
-    .sort((a,b)=>new Date(b.date)-new Date(a.date))
-    .slice(0,10);
-
+const rssPosts = postList.slice(0,10);
 let rssItemXml = "";
+
 for(const p of rssPosts){
-    const pubDate = new Date(p.date).toUTCString();
-    const fullUrl = site.url + site.base + p.url.replace(/^\//,'');
+    const y = p.date.getFullYear();
+    const m = String(p.date.getMonth() + 1).padStart(2, '0');
+    const d = String(p.date.getDate()).padStart(2, '0');
+    const relUrl = `${base}${p.category}/${y}/${m}/${d}/${p.slug}.html`;
+    const fullUrl = (config.url || "") + relUrl;
+    const pubDate = p.date.toUTCString();
+
     rssItemXml += `
 <item>
   <title>${xmlEscape(p.title)}</title>
   <link>${xmlEscape(fullUrl)}</link>
   <guid>${xmlEscape(fullUrl)}</guid>
   <pubDate>${pubDate}</pubDate>
-  <description>${xmlEscape(p.description||"")}</description>
+  <description>${xmlEscape(p.desc||"")}</description>
 </item>
 `;
 }
@@ -332,38 +309,43 @@ for(const p of rssPosts){
 const rssXml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
 <channel>
-  <title>${xmlEscape(site.title)}</title>
-  <link>${xmlEscape(site.url+site.base)}</link>
-  <description>${xmlEscape(site.description)}</description>
+  <title>${xmlEscape(config.title||"SmBLog")}</title>
+  <link>${xmlEscape((config.url||"") + base)}</link>
+  <description>${xmlEscape(config.description||"")}</description>
   <language>zh‑CN</language>
 ${rssItemXml}
 </channel>
 </rss>
 `;
-
 fs.writeFileSync(path.join(outputDir,"feed.xml"), rssXml,"utf8");
 
-// ========== RSS结束 ==========
-// JSON‑Feed 1.1
+const jsonFeedItems = rssPosts.map(p=>{
+    const y = p.date.getFullYear();
+    const m = String(p.date.getMonth() + 1).padStart(2, '0');
+    const d = String(p.date.getDate()).padStart(2, '0');
+    const relUrl = `${base}${p.category}/${y}/${m}/${d}/${p.slug}.html`;
+    const fullUrl = (config.url || "") + relUrl;
+    return {
+      "id": fullUrl,
+      "url": fullUrl,
+      "title": p.title,
+      "summary": p.desc||"",
+      "date_published": p.date.toISOString()
+    }
+});
+
 const jsonFeed = {
   "version":"https://jsonfeed.org/version/1.1",
-  "title": site.title,
-  "description": site.description,
-  "home_page_url": site.url+site.base,
-  "feed_url": site.url+site.base+"feed.json",
-  "items": rssPosts.map(p=>{
-    return {
-      "id": site.url+site.base+p.url.replace(/^\//,''),
-      "url": site.url+site.base+p.url.replace(/^\//,''),
-      "title": p.title,
-      "summary": p.description||"",
-      "date_published": new Date(p.date).toISOString()
-    }
-  })
+  "title": config.title||"SmBLog",
+  "description": config.description||"",
+  "home_page_url": (config.url||"") + base,
+  "feed_url": (config.url||"") + base + "feed.json",
+  "items": jsonFeedItems
 };
 fs.writeFileSync(path.join(outputDir,"feed.json"),JSON.stringify(jsonFeed,null,2),"utf8");
-console.log("✅ JSON feed.json 已生成");
+
 console.log("✅ RSS feed.xml 已生成");
+console.log("✅ JSON feed.json 已生成");
 console.log('✅ SmBLog 构建完成！');
 console.log(`📁 输出目录: ${outputDir}`);
 console.log(`📝 文章数量: ${postList.length}`);
