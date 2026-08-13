@@ -1,44 +1,46 @@
-<!DOCTYPE html>
-<html lang="cmn-Hans">
-<head>
-{{global_head}}
-<title>{{post_title}} | {{site_title}}</title>
-</head>
-<body>
-<div class="container">
-  <header>
-    <div class="header-inner">
-      <div class="site-info">
-        <h1><a href="{{base}}index.html">{{site_title}}</a></h1>
-      </div>
-      <button class="theme-toggle" aria-label="切换主题">
-        <i class="fa-solid fa-moon"></i>
-      </button>
+---
+layout: default
+---
+
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">{{ page.title | escape }}</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
+        {% assign date_format = site.minima.date_format | default: "%b %-d, %Y" %}
+        {{ page.date | date: date_format }}
+      </time>
+      {% if page.author %}
+        • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card" itemprop="name">{{ page.author }}</span></span>
+      {% endif %}
+    </p>
+
+    
+    {% if page.ai_summary and page.ai_summary != empty %}
+    <div style="margin: 1.5rem 0; padding: 1rem; border: 1px solid #222; border-radius: 2px;">
+      <h4 style="margin: 0 0 0.5rem 0; font-size: 0.95rem; font-weight: 600;">AI 内容摘要</h4>
+      <p style="margin: 0; line-height: 1.7; color: #333;">{{ page.ai_summary | escape }}</p>
     </div>
-    <nav class="nav">
-      {{nav}}
-    </nav>
+    {% endif %}
+    
+
   </header>
 
-  <main>
-    <article>
-      <h1 class="post-title">{{post_title}}</h1>
-      <div class="post-meta">
-        <i class="fa-regular fa-calendar"></i> {{post_date}}
-      </div>
-      <div class="post-content markdown-body">
-        {{post_content}}
-      </div>
-    </article>
-  </main>
-
-  <div class="footer-bar">
-    <a class="view-link" href="{{base}}index.html">
-      <i class="fa-solid fa-arrow-left view-icon"></i>返回首页
-    </a>
-    <footer>© {{author}}</footer>
+  <div class="post-content e-content" itemprop="articleBody">
+    {{ content }}
   </div>
-</div>
-<script src="{{base}}JS/main.js"></script>
-</body>
-</html>
+
+{% if page.comments != false %}
+<div id="tcomment"></div>
+<script src="https://cdn.jsdelivr.net/npm/twikoo@1.7.11/dist/twikoo.all.min.js"></script>
+<script>
+twikoo.init({
+  envId: 'envId: 'https://twikoo-minima.netlify.app/api',
+  el: '#tcomment',
+  lang: 'zh-CN',
+  path: window.location.pathname.replace(/\/index\.html$/, '')
+});
+</script>
+{% endif %}
+
+</article>
