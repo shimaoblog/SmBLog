@@ -26,3 +26,21 @@ console.log("Hello SmBLog!");
 > 这是一个引用块。
 
 **粗体文字** 和 *斜体文字* 也支持。
+
+# KaTeX 公式测试
+ 行内公式：$E=mc^2$
+ 块级公式：
+ $$
+ \int_{0}^{\infty} e^{-x} dx = 1
+ $$
+ 二次方程求根：
+ $$
+ x = \frac{-b \pm \sqrt{b^2-4ac}}{2a}
+ $$
+ 矩阵示例
+ $$
+ \begin{pmatrix}
+ 1 & 2 \\
+ 3 & 4
+ \end{pmatrix}
+ $$
