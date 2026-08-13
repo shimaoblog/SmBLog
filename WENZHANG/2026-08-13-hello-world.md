@@ -27,7 +27,7 @@ console.log("Hello SmBLog!");
 
 **粗体文字** 和 *斜体文字* 也支持。
 
-# KaTeX 公式测试
+## KaTeX 公式测试
  行内公式：$E=mc^2$
  块级公式：
  $$
