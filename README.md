@@ -58,3 +58,6 @@ npm run build
 ## Feed
 JSON Feed: `/feed.json`  
 XML: `/feed.xml`  
+
+## Thanks🙏
+[Gau's blog](https://blog.site.je) 十分好的CSS创意，没有你也不可能有SmBLog。  
