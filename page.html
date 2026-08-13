@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="cmn-Hans">
+<head>
+{{global_head}}
+<title>{{page_title}} | {{site_title}}</title>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="header-inner">
+      <div class="site-info">
+        <h1><a href="{{base}}index.html">{{site_title}}</a></h1>
+      </div>
+      <button class="theme-toggle" aria-label="切换主题">
+        <i class="fa-solid fa-moon"></i>
+      </button>
+    </div>
+    <nav class="nav">
+      {{nav}}
+    </nav>
+  </header>
+
+  <main>
+    <article>
+      <h1 class="post-title">{{page_title}}</h1>
+      <div class="post-content markdown-body">
+        {{page_content}}
+      </div>
+    </article>
+  </main>
+
+  <div class="footer-bar">
+    <a class="view-link" href="{{base}}index.html">
+      <i class="fa-solid fa-arrow-left view-icon"></i>返回首页
+    </a>
+    <footer>© {{author}}</footer>
+  </div>
+</div>
+<script src="{{base}}JS/main.js"></script>
+</body>
+</html>

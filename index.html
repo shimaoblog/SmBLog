@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="cmn-Hans">
+<head>
+{{global_head}}
+<title>{{site_title}}</title>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="header-inner">
+      <div class="site-info">
+        <h1><a href="{{base}}index.html">{{site_title}}</a></h1>
+      </div>
+      <button class="theme-toggle" aria-label="切换主题">
+        <i class="fa-solid fa-moon"></i>
+      </button>
+    </div>
+    <nav class="nav">
+      {{nav}}
+    </nav>
+  </header>
+
+  <main>
+    <div class="recent-header">
+      <i class="fa-solid fa-file-lines recent-icon"></i>
+      <span class="recent-title">最新文章</span>
+    </div>
+    <div class="article-list">
+      {{article_list}}
+    </div>
+
+    <div class="recent-header" style="margin-top:1.5rem;">
+      <i class="fa-solid fa-comment-dots recent-icon"></i>
+      <span class="recent-title">最新说说</span>
+    </div>
+    <div class="article-list">
+      {{talk_list}}
+    </div>
+  </main>
+
+  <div class="footer-bar">
+    <a class="view-link" href="{{base}}archive.html">
+      <i class="fa-solid fa-archive view-icon"></i>归档
+    </a>
+    <footer>© {{author}}</footer>
+  </div>
+</div>
+<script src="{{base}}JS/main.js"></script>
+</body>
+</html>

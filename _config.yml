@@ -1,0 +1,6 @@
+# SmBLog 站点配置
+title: "SmBLog"
+description: "一个极简静态博客"
+author: "石猫"
+base: "/SmBLog/"          # 子目录部署填 /仓库名/，根域名部署填 "/"
+output_dir: "./_site"
