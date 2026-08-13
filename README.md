@@ -54,3 +54,7 @@ npm run build
 `/分类/年/月/日/文件名.html`
 
 例如：`/技术/2026/08/13/hello-world.html`
+
+## Feed
+JSON Feed: `/feed.json`
+XML: `/feed.xml`
