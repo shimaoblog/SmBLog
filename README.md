@@ -56,5 +56,5 @@ npm run build
 例如：`/技术/2026/08/13/hello-world.html`
 
 ## Feed
-JSON Feed: `/feed.json`
-XML: `/feed.xml`
+JSON Feed: `/feed.json`  
+XML: `/feed.xml`  
