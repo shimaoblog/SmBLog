@@ -98,3 +98,209 @@ hr {
 <div class="link-card">
 <details>
 <summary>NNNullptr南</summary>
+<div class="link-content">
+站点地址：<a href="https://xnmoe.com" target="_blank">https://xnmoe.com</a>
+</div>
+</details>
+</div>
+
+<div class="link-card">
+<details>
+<summary>Karina的小窝</summary>
+<div class="link-content">
+站点地址：<a href="https://karina.xin" target="_blank">https://karina.xin</a>
+</div>
+</details>
+</div>
+
+<div class="link-card">
+<details>
+<summary>麻辣功夫茶博客网</summary>
+<div class="link-content">
+站点地址：<a href="https://amvc.top" target="_blank">https://amvc.top</a>
+</div>
+</details>
+</div>
+
+<div class="link-card">
+<details>
+<summary>SAKURAIN TEAM</summary>
+<div class="link-content">
+站点地址：<a href="https://sakurain.net/" target="_blank">https://sakurain.net/</a>
+</div>
+</details>
+</div>
+
+<div class="link-card">
+<details>
+<summary>Inalineの小站</summary>
+<div class="link-content">
+站点地址：<a href="https://inaline.net" target="_blank">https://inaline.net</a>
+</div>
+</details>
+</div>
+
+<div class="link-card">
+<details>
+<summary>Weiwei's blog</summary>
+<div class="link-content">
+站点地址：<a href="https://www.lov3u.top" target="_blank">https://www.lov3u.top</a>
+</div>
+</details>
+</div>
+
+<div class="link-card">
+<details>
+<summary>孟轩科技’s blog</summary>
+<div class="link-content">
+站点地址：<a href="https://blog.mxw2024.top/" target="_blank">https://blog.mxw2024.top/</a>
+</div>
+</details>
+</div>
+
+<div class="link-card">
+<details>
+<summary>孟轩网的小站</summary>
+<div class="link-content">
+站点地址：<a href="https://mxw2024.top" target="_blank">https://mxw2024.top</a>
+</div>
+</details>
+</div>
+
+<div class="link-card">
+<details>
+<summary>Upxuu</summary>
+<div class="link-content">
+站点地址：<a href="https://upxuu.com" target="_blank">https://upxuu.com</a>
+</div>
+</details>
+</div>
+
+<div class="link-card">
+<details>
+<summary>Ziworld</summary>
+<div class="link-content">
+站点地址：<a href="https://blog.ziworld.top" target="_blank">https://blog.ziworld.top</a>
+</div>
+</details>
+</div>
+<div class="link-card">
+<details>
+<summary>Hyde Blog</summary>
+<div class="link-content">
+站点地址：<a href="https://seasir.top/" target="_blank">https://seasir.top/</a>
+</div>
+</details>
+</div>
+
+<hr>
+<p><em>ps:这是新的样式，至于老友们，我会补得。。</em></p>
+
+<!-- 完整补齐 雨雪冰屋 头像、描述、RSS、快照 -->
+<div class="link-card">
+<details>
+<summary>雨雪冰屋</summary>
+<div class="link-content">
+<ul>
+  <li>站点地址：<a href="https://iamyukino.cn/" target="_blank">https://iamyukino.cn/</a></li>
+  <li>站点描述：一隅雨雪一炉窝，可能会融化持久堆？</li>
+  <li>站点头像：<br><img src="https://iamyukino.cn/favicon.ico" alt="雨雪冰屋头像"></li>
+  <li>RSS订阅：<a href="https://iamyukino.cn/rss.xml" target="_blank">https://iamyukino.cn/rss.xml</a></li>
+  <li>网站快照：<br><img src="https://iamyukino.cn/siteshot.jpg" alt="站点快照"></li>
+</ul>
+</div>
+</details>
+</div>
+
+<h2>推荐链接</h2>
+
+<div class="link-card">
+<details>
+<summary>Gau's Blog</summary>
+<div class="link-content">
+站点地址：<a href="https://oo.ct.ws/" target="_blank">https://oo.ct.ws/</a>
+</div>
+</details>
+</div>
+
+<div class="link-card">
+<details>
+<summary>猫不吃鱼.</summary>
+<div class="link-content">
+站点地址：<a href="https://starsei.com/" target="_blank">https://starsei.com/</a>
+</div>
+</details>
+</div>
+
+<div class="link-card">
+<details>
+<summary>张新豪</summary>
+<div class="link-content">
+站点地址：<a href="https://zhangxinhao.com/" target="_blank">https://zhangxinhao.com/</a>
+</div>
+</details>
+</div>
+
+<div class="link-card">
+<details>
+<summary>李猫球</summary>
+<div class="link-content">
+站点地址：<a href="https://limaoqiu.com/" target="_blank">https://limaoqiu.com/</a>
+</div>
+</details>
+</div>
+
+<div class="link-card">
+<details>
+<summary>Lia的博客</summary>
+<div class="link-content">
+站点地址：<a href="https://gledos.science/" target="_blank">https://gledos.science/</a>
+</div>
+</details>
+</div>
+
+<div class="link-card">
+<details>
+<summary>石樱灯笼博客</summary>
+<div class="link-content">
+站点地址：<a href="https://blog.catscarlet.com/" target="_blank">https://blog.catscarlet.com/</a>
+</div>
+</details>
+</div>
+
+<hr>
+<h2>其他链接</h2>
+
+<div class="link-card">
+<details>
+<summary>大佬论坛</summary>
+<div class="link-content">
+站点地址：<a href="https://dalao.net" target="_blank">https://dalao.net</a>
+</div>
+</details>
+</div>
+
+<hr>
+<h2>工具们</h2>
+
+<div class="link-card">
+<details>
+<summary>deviantart</summary>
+<div class="link-content">
+站点地址：<a href="https://www.deviantart.com/" target="_blank">https://www.deviantart.com/</a>
+</div>
+</details>
+</div>
+
+<div class="link-card">
+<details>
+<summary>时光机</summary>
+<div class="link-content">
+站点地址：<a href="https://web.archive.org" target="_blank">https://web.archive.org</a>
+</div>
+</details>
+</div>
+
+<h2>关注名单</h2>
+<friend-links blog-id="611"></friend-links>
+<script src="https://www.blogsclub.org/follow/follows_v2.2.min.js"></script>
