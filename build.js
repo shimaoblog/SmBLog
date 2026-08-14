@@ -130,7 +130,7 @@ talkList.sort((a, b) => b.date.getTime() - a.date.getTime());
 // ============================================
 let navHtml = `<a class="nav-item" href="${base}index.html"><i class="fa-solid fa-house nav-icon"></i>首页</a>`;
 for (const p of pageList) {
-  navHtml += `<a class="nav-item" href="${base}${p.slug}.html">${p.title}</a>`;
+  navHtml += `<a class="nav-item" href="${base}${p.slug}/">${p.title}</a>`;
 }
 
 // ============================================
@@ -236,7 +236,9 @@ for (const p of pageList) {
     .replaceAll('{{page_title}}', p.title)
     .replaceAll('{{page_content}}', p.content)
     .replaceAll('{{author}}', author);
-  fs.writeFileSync(path.join(outputDir, `${p.slug}.html`), html, 'utf-8');
+  const pageFolder = path.join(outputDir, p.slug);
+  fs.mkdirSync(pageFolder, { recursive: true });
+  fs.writeFileSync(path.join(pageFolder, 'index.html'), html, 'utf-8');
 }
 
 // ============================================
