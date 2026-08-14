@@ -1,64 +1,65 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh‑CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>404 - 页面未找到</title>
-{{global_head}}
+<meta charset="UTF‑8">
+<meta name="viewport" content="width=device‑width, initial‑scale=1.0">
+<title>404 · 页面未找到</title>
 <style>
+*{margin:0;padding:0;box-sizing:border-box;}
 body {
-    min‑height: 100vh;
+    min-height: 100vh;
     display: flex;
-    flex‑direction: column;
-    justify‑content: center;
-    align‑items: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     padding: 2rem;
-    text‑align: center;
-    color: #333;
-}
-.err‑code {
-    font‑size: 8rem;
-    font‑weight: 700;
-    line‑height: 1;
-    opacity: 0.12;
-    margin‑bottom: 1rem;
-}
-.err‑title {
-    font‑size: 1.8rem;
-    margin‑bottom: 1rem;
-}
-.err‑desc {
-    max‑width: 520px;
-    line‑height: 1.7;
-    color: #555;
-    margin‑bottom: 2rem;
-}
-.link‑block a {
-    display: inline‑block;
-    padding: 0.7rem 1.4rem;
-    margin: 0 0.5rem 0.8rem;
-    border: 1px solid #222;
-    text‑decoration: none;
+    text-align: center;
     color: #222;
-    transition: 0.22s;
+    background:#fff;
+    font-family:system-ui,"霞鹜文楷",sans-serif;
 }
-.link‑block a:hover {
-    background‑color: #222;
-    color: #fff;
+.err-code {
+    font-size:9rem;
+    font-weight:700;
+    color:#000;
+    opacity:0.08;
+    line-height:1;
+}
+.err-title{
+    font-size:1.7rem;
+    margin:-2rem 0 1rem;
+}
+.desc{
+    max-width:540px;
+    line-height:1.75;
+    color:#444;
+    margin-bottom:2rem;
+}
+.btns a{
+    display:inline-block;
+    padding:0.7rem 1.6rem;
+    margin:0 0.4rem 0.7rem;
+    border:1px solid #111;
+    text-decoration:none;
+    color:#111;
+    transition:0.24s;
+}
+.btns a:hover{
+    background:#111;
+    color:#fff;
 }
 </style>
 </head>
 <body>
-    <div class="err‑code">404</div>
-    <h1 class="err‑title">页面走丢了</h1>
-    <div class="err‑desc">
-        <p>当前访问的页面不存在、路径已变更或者已经被移除。</p>
-        <p>旧站历史文章存档位于：<strong>old.imshimao.com</strong>，你可以前往旧站查找之前的内容。</p>
-    </div>
-    <div class="link‑block">
-        <a href="{{base}}">返回首页</a>
-        <a href="https://old.imshimao.com">前往旧站存档</a>
-    </div>
+<div class="err-code">404</div>
+<h1 class="err-title">页面走丢了</h1>
+<div class="desc">
+<p>你访问的页面不存在、路径已经变更或是已移除。</p>
+<p>过往旧文章存档站点：<strong>old.imshimao.com</strong>，可以前往旧站查找历史内容。</p>
+</div>
+<div class="btns">
+<a href="/">返回首页</a>
+<a href="https://old.imshimao.com">前往旧站存档</a>
+</div>
 </body>
 </html>
-
