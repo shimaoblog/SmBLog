@@ -1,7 +1,7 @@
 ---Page---
 ---
 title: Portal
-slug: about
+slug: portal
 ---
 
 <style>
