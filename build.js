@@ -266,10 +266,20 @@ for (const p of postList) {
 }
 
 // ============================================
-// 复制根目录静态文件（favicon 等）
+// 复制根目录静态文件（favicon、robots.txt、sitemap.xml）
 // ============================================
+const rootAllowFiles = [
+  'robots.txt',
+  'sitemap.xml'
+];
 for (const f of fs.readdirSync(__dirname)) {
-  if (f.endsWith('.ico') || f.endsWith('.png') || f.endsWith('.jpg') || f.endsWith('.svg')) {
+  if (
+    f.endsWith('.ico') ||
+    f.endsWith('.png') ||
+    f.endsWith('.jpg') ||
+    f.endsWith('.svg') ||
+    rootAllowFiles.includes(f)
+  ) {
     fs.copyFileSync(path.join(__dirname, f), path.join(outputDir, f));
   }
 }
