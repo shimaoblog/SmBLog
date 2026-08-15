@@ -127,6 +127,23 @@ if (fs.existsSync(dirTalk)) {
 talkList.sort((a, b) => b.date.getTime() - a.date.getTime());
 
 // ============================================
+// 预渲染完整说说列表HTML，供给talk页面注入
+// ============================================
+let talkFullListHtml = '';
+for (const t of talkList) {
+  const y = t.date.getFullYear();
+  const m = String(t.date.getMonth() + 1).padStart(2, '0');
+  const d = String(t.date.getDate()).padStart(2, '0');
+  const dateStr = `${y}-${m}-${d}`;
+  talkFullListHtml += `
+<div class="talk-item">
+  <div class="talk-meta">${dateStr}</div>
+  <div class="talk-content">${t.content}</div>
+</div>
+`;
+}
+
+// ============================================
 // 渲染导航
 // ============================================
 let navHtml = `<a class="nav-item" href="${base}index.html"><i class="fa-solid fa-house nav-icon"></i>首页</a>`;
@@ -226,16 +243,20 @@ let archivePageHtml = archiveTpl
 fs.writeFileSync(path.join(outputDir, 'archive.html'), archivePageHtml, 'utf-8');
 
 // ============================================
-// 输出独立页面
+// 输出独立页面，slug=talk时替换内容为完整说说列表
 // ============================================
 for (const p of pageList) {
+  let pageContentOut = p.content;
+  if (p.slug === 'talk') {
+    pageContentOut = talkFullListHtml;
+  }
   let html = pageTpl
     .replaceAll('{{global_head}}', globalHead)
     .replaceAll('{{site_title}}', siteTitle)
     .replaceAll('{{base}}', base)
     .replaceAll('{{nav}}', navHtml)
     .replaceAll('{{page_title}}', p.title)
-    .replaceAll('{{page_content}}', p.content)
+    .replaceAll('{{page_content}}', pageContentOut)
     .replaceAll('{{author}}', author);
   const pageFolder = path.join(outputDir, p.slug);
   fs.mkdirSync(pageFolder, { recursive: true });
@@ -266,11 +287,12 @@ for (const p of postList) {
 }
 
 // ============================================
-// 复制根目录静态文件（favicon、robots.txt、sitemap.xml）
+// 复制根目录静态文件（favicon、robots.txt、sitemap.xml、404.html）
 // ============================================
 const rootAllowFiles = [
   'robots.txt',
-  'sitemap.xml'
+  'sitemap.xml',
+  '404.html'
 ];
 for (const f of fs.readdirSync(__dirname)) {
   if (
