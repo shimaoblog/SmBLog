@@ -4,3 +4,4 @@ description: "嗨！这里是石猫的博客,会在这里分享网络资源，�
 author: "石猫"
 base: "/"          # 子目录部署填 /仓库名/，根域名部署填 "/"
 output_dir: "./_site"
+url: "https://blog.imshimao.com"
