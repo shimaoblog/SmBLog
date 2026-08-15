@@ -1,0 +1,76 @@
+$lb-backdrop: rgba(0,0,0,0.82);
+$lb-ui-color: rgba(255,255,255,0.78);
+$lb-ui-bg: rgba(20,20,20,0.35);
+
+.lightbox-overlay {
+  position: fixed;
+  inset:0;
+  background: $lb-backdrop;
+  backdrop-filter: blur(10px);
+  z-index:9999;
+  opacity:0;
+  visibility:hidden;
+  transition: opacity 0.32s ease, visibility 0.32s;
+}
+.lightbox-overlay.active {
+  opacity:1;
+  visibility:visible;
+}
+.lightbox-wrap {
+  width:100%;
+  height:100%;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.lightbox-img-container {
+  position:absolute;
+  transform:scale(0.92);
+  transition: transform 0.36s cubic‑bezier(0.22, 1, 0.36, 1);
+}
+.lightbox-overlay.active .lightbox-img-container {
+  transform:scale(1);
+}
+.lightbox-img {
+  max‑width:90vw;
+  max‑height:86vh;
+  user‑drag:none;
+  user‑select:none;
+  cursor:grab;
+}
+.lightbox-img:active {cursor:grabbing;}
+
+.lb-btn {
+  position:absolute;
+  width:44px;height:44px;
+  border‑radius:50%;
+  background:$lb-ui-bg;
+  color:$lb-ui-color;
+  border:none;
+  font‑size:22px;
+  display:flex;
+  align‑items:center;
+  justify‑content:center;
+  backdrop‑filter:blur(6px);
+  transition: background 0.2s;
+  z‑index:10;
+}
+.lb-btn:hover {background:rgba(45,45,45,0.55);}
+.lb-close {top:16px; right:16px;}
+.lb-prev {left:16px; top:50%; transform:translateY(-50%);}
+.lb-next {right:16px; top:50%; transform:translateY(-50%);}
+.lb-info-bar {
+  position:absolute;
+  bottom:18px;
+  left:50%;
+  transform:translateX(-50%);
+  background:$lb-ui-bg;
+  color:$lb-ui-color;
+  padding:8px 16px;
+  border‑radius:12px;
+  backdrop‑filter:blur(6px);
+  font‑size:0.9rem;
+  text‑align:center;
+  min‑width:220px;
+}
