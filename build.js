@@ -9,6 +9,7 @@ const yaml = require('js-yaml');
 const configPath = path.join(__dirname, '_config.yml');
 const config = yaml.load(fs.readFileSync(configPath, 'utf-8'));
 const base = config.base || '/';
+const siteUrl = config.url || '';
 const outputDir = path.resolve(__dirname, config.output_dir || './_site');
 const author = config.author || '';
 const siteTitle = config.title || 'SmBLog';
@@ -64,6 +65,298 @@ for (const f of fs.readdirSync(__dirname)) {
   if (raw.startsWith('---Page---')) {
     const cleanRaw = raw.replace('---Page---', '').trim();
     const { data, content } = matter(cleanRaw);
+    const slug = data.slug || path.basename(f, '.md');
+    pageList.push({
+      title: data.title || slug,
+      slug: slug,
+      content: marked.parse(content),
+      data: data
+    });
+  }
+}
+
+// ============================================
+// 收集文章 WENZHANG/
+// ============================================
+let postList = [];
+if (fs.existsSync(dirArticle)) {
+  for (const f of fs.readdirSync(dirArticle)) {
+    if (!f.endsWith('.md')) continue;
+    const filePath = path.join(dirArticle, f);
+    const raw = fs.readFileSync(filePath, 'utf-8');
+    const { data, content } = matter(raw);
+    const dateStr = data.date || f.match(/(\d{4}-\d{2}-\d{2})/)?.[1] || '2026-01-01';
+    const dt = new Date(dateStr);
+    const slug = data.slug || path.basename(f, '.md').replace(/^\d{4}-\d{2}-\d{2}-/, '');
+    const category = data.category || 'note';
+    postList.push({
+      title: data.title || slug,
+      date: dt,
+      category: category,
+      slug: slug,
+      content: marked.parse(content),
+      desc: data.description || content.replace(/[#*`>\-]/g, '').slice(0, 80) + '...',
+      data: data
+    });
+  }
+}
+postList.sort((a, b) => b.date.getTime() - a.date.getTime());
+
+// ============================================
+// 收集说说 TALK/
+// ============================================
+let talkList = [];
+if (fs.existsSync(dirTalk)) {
+  for (const f of fs.readdirSync(dirTalk)) {
+    if (!f.endsWith('.md')) continue;
+    const filePath = path.join(dirTalk, f);
+    const raw = fs.readFileSync(filePath, 'utf-8');
+    const { data, content } = matter(raw);
+    const dateStr = data.date || f.match(/(\d{4}-\d{2}-\d{2})/)?.[1] || '2026-01-01';
+    const dt = new Date(dateStr);
+    const slug = data.slug || path.basename(f, '.md');
+    talkList.push({
+      title: data.title || '说说',
+      date: dt,
+      slug: slug,
+      content: marked.parse(content),
+      data: data
+    });
+  }
+}
+talkList.sort((a, b) => b.date.getTime() - a.date.getTime());
+
+// ============================================
+// 渲染导航
+// ============================================
+let navHtml = `<a class="nav-item" href="${base}index.html"><i class="fa-solid fa-house nav-icon"></i>首页</a>`;
+for (const p of pageList) {
+  navHtml += `<a class="nav-item" href="${base}${p.slug}/">${p.title}</a>`;
+}
+
+// ============================================
+// 渲染首页文章列表
+// ============================================
+let articleListHtml = '';
+for (const p of postList.slice(0, 10)) {
+  const y = p.date.getFullYear();
+  const m = String(p.date.getMonth() + 1).padStart(2, '0');
+  const d = String(p.date.getDate()).padStart(2, '0');
+  const url = `${base}${p.category}/${y}/${m}/${d}/${p.slug}.html`;
+  const dateStr = `${y}-${m}-${d}`;
+  articleListHtml += `
+    <div class="article-card">
+      <a href="${url}">
+        <span class="article-date"><i class="fa-regular fa-calendar"></i> ${dateStr}</span>
+        <span class="article-title">${p.title}</span>
+        <p class="article-desc">${p.desc}</p>
+      </a>
+    </div>`;
+}
+
+// ============================================
+// 渲染首页说说列表
+// ============================================
+let talkListHtml = '';
+for (const t of talkList.slice(0, 5)) {
+  const y = t.date.getFullYear();
+  const m = String(t.date.getMonth() + 1).padStart(2, '0');
+  const d = String(t.date.getDate()).padStart(2, '0');
+  const dateStr = `${y}-${m}-${d}`;
+  const plainText = t.content.replace(/<[^>]+>/g, '').slice(0, 60) + '...';
+  talkListHtml += `
+    <div class="article-card">
+      <span class="article-date"><i class="fa-regular fa-calendar"></i> ${dateStr}</span>
+      <p class="article-desc">${plainText}</p>
+    </div>`;
+}
+
+// ============================================
+// 渲染归档页
+// ============================================
+let archiveHtml = '';
+const yearMap = {};
+for (const p of postList) {
+  const y = p.date.getFullYear();
+  if (!yearMap[y]) yearMap[y] = [];
+  yearMap[y].push(p);
+}
+const years = Object.keys(yearMap).sort((a, b) => b - a);
+for (const y of years) {
+  const posts = yearMap[y];
+  archiveHtml += `<div class="year-group">`;
+  archiveHtml += `<div class="timeline-year">${y}<span class="year-count">${posts.length} 篇</span></div>`;
+  archiveHtml += `<div class="timeline-posts">`;
+  for (const p of posts) {
+    const m = String(p.date.getMonth() + 1).padStart(2, '0');
+    const d = String(p.date.getDate()).padStart(2, '0');
+    const url = `${base}${p.category}/${y}/${m}/${d}/${p.slug}.html`;
+    archiveHtml += `
+      <div class="timeline-post">
+        <span class="timeline-post-date">${m}-${d}</span>
+        <a class="timeline-post-title" href="${url}">${p.title}</a>
+      </div>`;
+  }
+  archiveHtml += `</div></div>`;
+}
+
+// ============================================
+// 输出首页
+// ============================================
+let indexHtml = indexTpl
+  .replaceAll('{{global_head}}', globalHead)
+  .replaceAll('{{site_title}}', siteTitle)
+  .replaceAll('{{base}}', base)
+  .replaceAll('{{nav}}', navHtml)
+  .replaceAll('{{article_list}}', articleListHtml)
+  .replaceAll('{{talk_list}}', talkListHtml)
+  .replaceAll('{{author}}', author);
+fs.writeFileSync(path.join(outputDir, 'index.html'), indexHtml, 'utf-8');
+
+// ============================================
+// 输出归档页
+// ============================================
+let archivePageHtml = archiveTpl
+  .replaceAll('{{global_head}}', globalHead)
+  .replaceAll('{{site_title}}', siteTitle)
+  .replaceAll('{{base}}', base)
+  .replaceAll('{{nav}}', navHtml)
+  .replaceAll('{{archive_content}}', archiveHtml)
+  .replaceAll('{{author}}', author);
+fs.writeFileSync(path.join(outputDir, 'archive.html'), archivePageHtml, 'utf-8');
+
+// ============================================
+// 输出独立页面
+// ============================================
+for (const p of pageList) {
+  let html = pageTpl
+    .replaceAll('{{global_head}}', globalHead)
+    .replaceAll('{{site_title}}', siteTitle)
+    .replaceAll('{{base}}', base)
+    .replaceAll('{{nav}}', navHtml)
+    .replaceAll('{{page_title}}', p.title)
+    .replaceAll('{{page_content}}', p.content)
+    .replaceAll('{{author}}', author);
+  const pageFolder = path.join(outputDir, p.slug);
+  fs.mkdirSync(pageFolder, { recursive: true });
+  fs.writeFileSync(path.join(pageFolder, 'index.html'), html, 'utf-8');
+}
+
+// ============================================
+// 输出文章页（路径：/分类/YYYY/MM/DD/slug.html）
+// ============================================
+for (const p of postList) {
+  const y = p.date.getFullYear();
+  const m = String(p.date.getMonth() + 1).padStart(2, '0');
+  const d = String(p.date.getDate()).padStart(2, '0');
+  const outSub = path.join(outputDir, p.category, String(y), m, d);
+  fs.mkdirSync(outSub, { recursive: true });
+
+  const dateStr = `${y}-${m}-${d}`;
+  let html = postTpl
+    .replaceAll('{{global_head}}', globalHead)
+    .replaceAll('{{site_title}}', siteTitle)
+    .replaceAll('{{base}}', base)
+    .replaceAll('{{nav}}', navHtml)
+    .replaceAll('{{post_title}}', p.title)
+    .replaceAll('{{post_date}}', dateStr)
+    .replaceAll('{{post_content}}', p.content)
+    .replaceAll('{{author}}', author);
+  fs.writeFileSync(path.join(outSub, `${p.slug}.html`), html, 'utf-8');
+}
+
+// ============================================
+// 复制根目录静态文件（favicon 等）
+// ============================================
+for (const f of fs.readdirSync(__dirname)) {
+  if (f.endsWith('.ico') || f.endsWith('.png') || f.endsWith('.jpg') || f.endsWith('.svg')) {
+    fs.copyFileSync(path.join(__dirname, f), path.join(outputDir, f));
+  }
+}
+
+// ============================================
+// RSS + JSON Feed
+// ============================================
+function xmlEscape(str){
+    if(!str) return "";
+    return String(str)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&apos;");
+}
+
+const rssPosts = postList.slice(0,10);
+let rssItemXml = "";
+
+for(const p of rssPosts){
+    const y = p.date.getFullYear();
+    const m = String(p.date.getMonth() + 1).padStart(2, '0');
+    const d = String(p.date.getDate()).padStart(2, '0');
+    const relUrl = `${base}${p.category}/${y}/${m}/${d}/${p.slug}.html`;
+    const fullUrl = new URL(relUrl, siteUrl).href;
+    const pubDate = p.date.toUTCString();
+
+    rssItemXml += `
+<item>
+  <title>${xmlEscape(p.title)}</title>
+  <link>${xmlEscape(fullUrl)}</link>
+  <guid>${xmlEscape(fullUrl)}</guid>
+  <pubDate>${pubDate}</pubDate>
+  <description>${xmlEscape(p.desc||"")}</description>
+</item>
+`;
+}
+
+const channelLink = new URL(base, siteUrl).href;
+const rssXml = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<channel>
+  <title>${xmlEscape(config.title||"SmBLog")}</title>
+  <link>${xmlEscape(channelLink)}</link>
+  <description>${xmlEscape(config.description||"")}</description>
+  <language>zh‑CN</language>
+${rssItemXml}
+</channel>
+</rss>
+`;
+fs.writeFileSync(path.join(outputDir,"feed.xml"), rssXml,"utf8");
+
+const jsonFeedItems = rssPosts.map(p=>{
+    const y = p.date.getFullYear();
+    const m = String(p.date.getMonth() + 1).padStart(2, '0');
+    const d = String(p.date.getDate()).padStart(2, '0');
+    const relUrl = `${base}${p.category}/${y}/${m}/${d}/${p.slug}.html`;
+    const fullUrl = new URL(relUrl, siteUrl).href;
+    return {
+      "id": fullUrl,
+      "url": fullUrl,
+      "title": p.title,
+      "summary": p.desc||"",
+      "date_published": p.date.toISOString()
+    }
+});
+
+const feedUrl = new URL(`${base}feed.json`, siteUrl).href;
+const homePageUrl = new URL(base, siteUrl).href;
+const jsonFeed = {
+  "version":"https://jsonfeed.org/version/1.1",
+  "title": config.title||"SmBLog",
+  "description": config.description||"",
+  "home_page_url": homePageUrl,
+  "feed_url": feedUrl,
+  "items": jsonFeedItems
+};
+fs.writeFileSync(path.join(outputDir,"feed.json"),JSON.stringify(jsonFeed,null,2),"utf8");
+
+console.log("✅ RSS feed.xml 已生成");
+console.log("✅ JSON feed.json 已生成");
+console.log('✅ SmBLog 构建完成！');
+console.log(`📁 输出目录: ${outputDir}`);
+console.log(`📝 文章数量: ${postList.length}`);
+console.log(`💬 说说数量: ${talkList.length}`);
+console.log(`📄 独立页面: ${pageList.length}`);
     const slug = data.slug || path.basename(f, '.md');
     pageList.push({
       title: data.title || slug,
