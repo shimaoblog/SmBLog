@@ -95,3 +95,14 @@ body.dark .tool-thumb{box-shadow:0 0 0 0.5px rgba(224,224,224,0.25);}
 .about-card .article-desc > a{display:block;margin:0;padding:0;}
 .about-card .article-desc strong a{display:inline;word-break:break-word;}
 .about-card .article-desc > a .view-icon{vertical-align:middle;margin-right:2px;}
+.talk-item{
+  padding:1rem;
+  border:1px solid #ddd;
+  border-radius:8px;
+  margin-bottom:1rem;
+}
+.talk-meta{
+  font-size:0.85rem;
+  color:#666;
+  margin-bottom:0.5rem;
+}
