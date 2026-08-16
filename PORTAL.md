@@ -5,7 +5,7 @@ slug: portal
 ---
 
 <style>
-/* 黑白极简折叠友链样式 */
+
 .link-card {
   border: 1px solid #ddd;
   border-radius: 6px;
@@ -207,6 +207,20 @@ hr {
   <li>站点头像：<br><img src="https://iamyukino.cn/favicon.ico" alt="雨雪冰屋头像"></li>
   <li>RSS订阅：<a href="https://iamyukino.cn/rss.xml" target="_blank">https://iamyukino.cn/rss.xml</a></li>
   <li>网站快照：<br><img src="https://iamyukino.cn/siteshot.jpg" alt="站点快照"></li>
+</ul>
+</div>
+</details>
+</div>
+
+<div class="link-card">
+<details>
+<summary>ks blog</summary>
+<div class="link-content">
+<ul>
+  <li>站点地址：<a href="https://www.cuizi.top/" target="_blank">https://www.cuizi.top/</a></li>
+  <li>站点描述：保持好奇，保持诚实。</li>
+  <li>站点头像：<br><img src="https://raw.githubusercontent.com/cuizihang1145/cuizihang1145.github.io/main/logo.png" alt="ks blog头像"></li>
+  <li>RSS订阅：<a href="https://www.cuizi.top/rss.xml" target="_blank">https://www.cuizi.top/rss.xml</a></li>
 </ul>
 </div>
 </details>
