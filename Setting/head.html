@@ -8,10 +8,13 @@
 <meta name="theme-color" content="#ffffff">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="format-detection" content="telephone=no,email=no,address=no">
+
+<!-- Twitter 兜底 -->
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="{{site_title}}" />
-<meta name="twitter:description" content="{{site_description}}" />
-<link rel="stylesheet" href="{{base}}CSS/main.css">
+<meta name="twitter:title" content="{{site_title || '石猫博客'}}" />
+<meta name="twitter:description" content="{{site_description || '极简静态博客SmBLog，分享网络技术、日常随笔、历史记录'}}" />
+
+<link rel="stylesheet" href="{{base || '/'}}CSS/main.css">
 <link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/7.0.0/css/all.min.css">
 <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/KaTeX/0.16.47/katex.min.css">
 <script src="https://cdn.bootcdn.net/ajax/libs/KaTeX/0.16.47/katex.min.js"></script>
@@ -26,14 +29,34 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 </script>
-<link rel="alternate" type="application/rss+xml" title="石猫博客 RSS Feed" href="{{base}}feed.xml">
-<link rel="alternate" type="application/json" title="石猫博客 JSON Feed" href="{{base}}feed.json">
-<meta property="og:title" content="{{site_title}}" />
-<meta property="og:locale" content="cmn-Hans" />
-<meta property="og:description" content="{{site_description}}" />
-<meta property="og:url" content="{{site_url}}{{base}}" />
+
+<link rel="alternate" type="application/rss+xml" title="石猫博客 RSS Feed" href="{{base || '/'}}feed.xml">
+<link rel="alternate" type="application/json" title="石猫博客 JSON Feed" href="{{base || '/'}}feed.json">
+
+<!-- OpenGraph 兜底 -->
+<meta property="og:title" content="{{site_title || '石猫博客'}}" />
+<meta property="og:locale" content="zh_CN" />
+<meta property="og:description" content="{{site_description || '极简静态博客SmBLog，分享网络技术、日常随笔、历史记录'}}" />
+<meta property="og:url" content="{{site_url || 'https://blog.imshimao.com'}}{{base || '/'}}" />
 <meta property="og:site_name" content="石猫博客" />
 <meta property="og:type" content="website" />
+
+<link rel="canonical" href="{{site_url || 'https://blog.imshimao.com'}}{{base || '/'}}" />
+
+<!-- 结构化数据兜底 -->
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "{{site_title || '石猫博客'}}",
+    "url": "{{site_url || 'https://blog.imshimao.com'}}{{base || '/'}}",
+    "description": "{{site_description || '极简静态博客SmBLog，分享网络技术、日常随笔、历史记录'}}",
+    "inLanguage": "zh-CN"
+}
+</script>
+
+<link rel="stylesheet" href="{{base || '/'}}CSS/lightbox.css">
+<script src="{{base || '/'}}JS/lightbox.js" defer></script>
 <link rel="canonical" href="{{site_url}}{{base}}" />
 <script type="application/ld+json">
 {
