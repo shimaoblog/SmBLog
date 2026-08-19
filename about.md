@@ -3,7 +3,7 @@
 title: About
 slug: about
 ---
-
+![SHIMAOBLOG(https://img.cdn1.vip/i/6a85afdd5ac46_1787146205.webp)
 ## 谢谢你来看我！
 这里是我的博客，部署在**GitHub Pages**里！  
 石猫博客可是一个充满生机的博客，创作内容大多数是互联网历史考察和~~伪~~技术。  
