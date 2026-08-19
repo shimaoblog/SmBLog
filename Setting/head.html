@@ -9,20 +9,22 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="format-detection" content="telephone=no,email=no,address=no">
 
-<!-- Twitter 兜底 -->
+
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="{{site_title || '石猫博客'}}" />
 <meta name="twitter:description" content="{{site_description || '极简静态博客SmBLog，分享网络技术、日常随笔、历史记录'}}" />
 
-<!-- 绝对路径静态资源 -->
+
 <link rel="stylesheet" href="https://blog.imshimao.com/CSS/main.css">
 <link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/7.0.0/css/all.min.css">
 <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/KaTeX/0.16.47/katex.min.css">
 <link rel="stylesheet" href="https://blog.imshimao.com/CSS/lightbox.css">
 
+
 <script src="https://cdn.bootcdn.net/ajax/libs/KaTeX/0.16.47/katex.min.js"></script>
 <script src="https://cdn.bootcdn.net/ajax/libs/KaTeX/0.16.47/contrib/auto-render.js"></script>
 <script src="https://blog.imshimao.com/JS/lightbox.js" defer></script>
+
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
@@ -35,11 +37,11 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
 
-<!-- 订阅链接绝对路径 -->
+
 <link rel="alternate" type="application/rss+xml" title="石猫博客 RSS Feed" href="https://blog.imshimao.com/feed.xml">
 <link rel="alternate" type="application/json" title="石猫博客 JSON Feed" href="https://blog.imshimao.com/feed.json">
 
-<!-- OpenGraph 兜底 -->
+
 <meta property="og:title" content="{{site_title || '石猫博客'}}" />
 <meta property="og:locale" content="zh_CN" />
 <meta property="og:description" content="{{site_description || '极简静态博客SmBLog，分享网络技术、日常随笔、历史记录'}}" />
@@ -47,9 +49,10 @@ document.addEventListener("DOMContentLoaded", function() {
 <meta property="og:site_name" content="石猫博客" />
 <meta property="og:type" content="website" />
 
+
 <link rel="canonical" href="https://blog.imshimao.com/" />
 
-<!-- 结构化数据兜底（仅保留一份，删除重复块） -->
+
 <script type="application/ld+json">
 {
     "@context": "https://schema.org",
@@ -60,7 +63,6 @@ document.addEventListener("DOMContentLoaded", function() {
     "inLanguage": "zh-CN"
 }
 </script>
-    "@type": "WebSite",
     "name": "石猫博客",
     "url": "{{site_url}}{{base}}",
     "description": "{{site_description}}",
