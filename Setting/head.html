@@ -9,8 +9,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="format-detection" content="telephone=no,email=no,address=no">
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="{{site_title || '石猫博客'}}" />
-<meta name="twitter:description" content="{{site_description || '石猫博客👋🏻，分享网络技术、日常随笔、历史记录'}}" />
+<meta name="twitter:title" content="{{post_title || site_title || '石猫博客'}}" />
+<meta name="twitter:description" content="{{post_desc || site_description || '石猫博客👋🏻，分享网络技术、日常随笔、历史记录'}}" />
 <link rel="stylesheet" href="https://blog.imshimao.com/CSS/main.css">
 <link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/7.0.0/css/all.min.css">
 <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/KaTeX/0.16.47/katex.min.css">
@@ -30,20 +30,20 @@ document.addEventListener("DOMContentLoaded", function() {
 </script>
 <link rel="alternate" type="application/rss+xml" title="石猫博客 RSS Feed" href="https://blog.imshimao.com/feed.xml">
 <link rel="alternate" type="application/json" title="石猫博客 JSON Feed" href="https://blog.imshimao.com/feed.json">
-<meta property="og:title" content="{{site_title || '石猫博客'}}" />
+<meta property="og:title" content="{{post_title || site_title || '石猫博客'}}" />
 <meta property="og:locale" content="zh_CN" />
-<meta property="og:description" content="{{site_description || '石猫博客👋🏻，分享网络技术、日常随笔、历史记录'}}" />
-<meta property="og:url" content="https://blog.imshimao.com/" />
+<meta property="og:description" content="{{post_desc || site_description || '石猫博客👋🏻，分享网络技术、日常随笔、历史记录'}}" />
+<meta property="og:url" content="{{pageUrl}}" />
 <meta property="og:site_name" content="石猫博客" />
 <meta property="og:type" content="website" />
-<link rel="canonical" href="https://blog.imshimao.com/" />
+<link rel="canonical" href="{{pageUrl}}" />
 <script type="application/ld+json">
 {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "{{site_title || '石猫博客'}}",
-    "url": "https://blog.imshimao.com/",
-    "description": "{{site_description || '石猫博客👋🏻，分享网络技术、日常随笔、历史记录'}}",
+    "name": "{{post_title || site_title || '石猫博客'}}",
+    "url": "{{pageUrl}}",
+    "description": "{{post_desc || site_description || '石猫博客👋🏻，分享网络技术、日常随笔、历史记录'}}",
     "inLanguage": "zh-CN"
 }
 </script>
