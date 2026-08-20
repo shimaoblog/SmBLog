@@ -221,9 +221,9 @@ for (const y of years) {
 // ============================================
 // 输出首页
 // ============================================
-const homePageUrl = new URL(base, siteUrl).href;
+const indexPageUrl = new URL(base, siteUrl).href;
 let indexHead = globalHeadTpl
-  .replaceAll('{{pageUrl}}', homePageUrl)
+  .replaceAll('{{pageUrl}}', indexPageUrl)
   .replaceAll('{{post_title}}', siteTitle)
   .replaceAll('{{post_desc}}', siteDesc)
   .replaceAll('{{base}}', base);
@@ -403,12 +403,12 @@ const jsonFeedItems = rssPosts.map(p=>{
 });
 
 const feedUrl = new URL(`${base}feed.json`, siteUrl).href;
-const homePageUrl = new URL(base, siteUrl).href;
+const feedHomeUrl = new URL(base, siteUrl).href;
 const jsonFeed = {
   "version":"https://jsonfeed.org/version/1.1",
   "title": config.title||"SmBLog",
   "description": config.description||"",
-  "home_page_url": homePageUrl,
+  "home_page_url": feedHomeUrl,
   "feed_url": feedUrl,
   "items": jsonFeedItems
 };
