@@ -13,6 +13,7 @@ const siteUrl = config.url || '';
 const outputDir = path.resolve(__dirname, config.output_dir || './_site');
 const author = config.author || '';
 const siteTitle = config.title || 'SmBLog';
+const siteDesc = config.description || '';
 
 // 目录常量
 const dirArticle = path.join(__dirname, 'WENZHANG');
@@ -45,8 +46,7 @@ copyDir(dirCss, path.join(outputDir, 'CSS'));
 copyDir(dirJs, path.join(outputDir, 'JS'));
 
 // 读取全局 head 片段
-const globalHead = fs.readFileSync(path.join(dirSetting, 'head.html'), 'utf-8')
-  .replaceAll('{{base}}', base);
+let globalHeadTpl = fs.readFileSync(path.join(dirSetting, 'head.html'), 'utf-8');
 
 // 读取模板
 const indexTpl = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf-8');
@@ -70,6 +70,7 @@ for (const f of fs.readdirSync(__dirname)) {
       title: data.title || slug,
       slug: slug,
       content: marked.parse(content),
+      desc: data.description || siteDesc,
       data: data
     });
   }
@@ -220,8 +221,15 @@ for (const y of years) {
 // ============================================
 // 输出首页
 // ============================================
+const homePageUrl = new URL(base, siteUrl).href;
+let indexHead = globalHeadTpl
+  .replaceAll('{{pageUrl}}', homePageUrl)
+  .replaceAll('{{post_title}}', siteTitle)
+  .replaceAll('{{post_desc}}', siteDesc)
+  .replaceAll('{{base}}', base);
+
 let indexHtml = indexTpl
-  .replaceAll('{{global_head}}', globalHead)
+  .replaceAll('{{global_head}}', indexHead)
   .replaceAll('{{site_title}}', siteTitle)
   .replaceAll('{{base}}', base)
   .replaceAll('{{nav}}', navHtml)
@@ -233,8 +241,16 @@ fs.writeFileSync(path.join(outputDir, 'index.html'), indexHtml, 'utf-8');
 // ============================================
 // 输出归档页
 // ============================================
+const archiveRelPath = `${base}archive.html`;
+const archivePageUrl = new URL(archiveRelPath, siteUrl).href;
+let archiveHead = globalHeadTpl
+  .replaceAll('{{pageUrl}}', archivePageUrl)
+  .replaceAll('{{post_title}}', `归档 - ${siteTitle}`)
+  .replaceAll('{{post_desc}}', `文章归档 | ${siteDesc}`)
+  .replaceAll('{{base}}', base);
+
 let archivePageHtml = archiveTpl
-  .replaceAll('{{global_head}}', globalHead)
+  .replaceAll('{{global_head}}', archiveHead)
   .replaceAll('{{site_title}}', siteTitle)
   .replaceAll('{{base}}', base)
   .replaceAll('{{nav}}', navHtml)
@@ -250,8 +266,16 @@ for (const p of pageList) {
   if (p.slug === 'talk') {
     pageContentOut = talkFullListHtml;
   }
+  const pageRelUrl = `${base}${p.slug}/`;
+  const pageFullUrl = new URL(pageRelUrl, siteUrl).href;
+  let pageHead = globalHeadTpl
+    .replaceAll('{{pageUrl}}', pageFullUrl)
+    .replaceAll('{{post_title}}', `${p.title} | ${siteTitle}`)
+    .replaceAll('{{post_desc}}', p.desc)
+    .replaceAll('{{base}}', base);
+
   let html = pageTpl
-    .replaceAll('{{global_head}}', globalHead)
+    .replaceAll('{{global_head}}', pageHead)
     .replaceAll('{{site_title}}', siteTitle)
     .replaceAll('{{base}}', base)
     .replaceAll('{{nav}}', navHtml)
@@ -274,8 +298,16 @@ for (const p of postList) {
   fs.mkdirSync(outSub, { recursive: true });
 
   const dateStr = `${y}-${m}-${d}`;
+  const postRelUrl = `${base}${p.category}/${y}/${m}/${d}/${p.slug}.html`;
+  const postFullUrl = new URL(postRelUrl, siteUrl).href;
+  let postHead = globalHeadTpl
+    .replaceAll('{{pageUrl}}', postFullUrl)
+    .replaceAll('{{post_title}}', `${p.title} | ${siteTitle}`)
+    .replaceAll('{{post_desc}}', p.desc)
+    .replaceAll('{{base}}', base);
+
   let html = postTpl
-    .replaceAll('{{global_head}}', globalHead)
+    .replaceAll('{{global_head}}', postHead)
     .replaceAll('{{site_title}}', siteTitle)
     .replaceAll('{{base}}', base)
     .replaceAll('{{nav}}', navHtml)
